@@ -1,8 +1,48 @@
 #include <stdio.h>
 #include <assert.h>
 
-// Type definition for bitboards
+// Type definition for bitboards.
 typedef unsigned long long U64;
+
+// Rank constants (1..8).
+const U64 Ranks[8] = {
+    0xff,
+    0xff00,
+    0xff0000,
+    0xff000000,
+    0xff00000000,
+    0xff0000000000,
+    0xff000000000000,
+    0xff00000000000000
+};
+
+// File constants (A..H).
+const U64 Files[8] = {
+    0x8080808080808080,
+    0x4040404040404040,
+    0x2020202020202020,
+    0x1010101010101010,
+    0x0808080808080808,
+    0x0404040404040404,
+    0x0202020202020202,
+    0x0101010101010101
+};
+
+// White Pieces
+U64 whitePawns = 0xff00;
+U64 whiteKnights = 0x42;
+U64 whiteBishops = 0x24;
+U64 whiteRooks = 0x81;
+U64 whiteQueens = 0x10;
+U64 whiteKing = 0x8;
+
+// Black Pieces
+U64 blackPawns = 0xff000000000000;
+U64 blackKnights = 0x4200000000000000;
+U64 blackBishops = 0x2400000000000000;
+U64 blackRooks = 0x8100000000000000;
+U64 blackQueens = 0x1000000000000000;
+U64 blackKing = 0x800000000000000;
 
 int main() {
     initPopCountByte();
@@ -22,7 +62,7 @@ unsigned char popCountByte[256];
  */
 void initPopCountByte() {
     popCountByte[0] = 0;
-    for (int i = 0; i < 256; i++) {
+    for (int i = 1; i < 256; i++) {
         popCountByte[i] = popCountByte[i / 2] + (i & 1);
     }
 }
